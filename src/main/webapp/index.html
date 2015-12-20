@@ -1,43 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
     <title>Home</title>
   </head>
+  <!--
+    Identifies the "main" div as the actual content to work with.
+  -->
   <body class="lift:content_id=main">
+
+    <!--
+      Invokes the "surround" snippet, using the "default" template and injecting the tags into the "content" id tag.
+    -->
     <div id="main" class="lift:surround?with=default;at=content">
+      <h2>Welcome to your project!</h2>
+      <p>
+        <!--
+          Here we invoke the "howdy" method on the custom "HellowWorld" snippet.
 
-      <div class="lift:comet?type=Chat">
-        Some chat messages
-        <ul>
-          <li>A message</li>
-          <li class="clearable">Another message</li>
-          <li class="clearable">A third message</li>
-        </ul>
-      </div>
-
-      <div>
-        <form class="lift:form.ajax">
-          <input class="lift:ChatIn" id="chat_in"/>
-          <input type="submit" value="Say Something"/>
-        </form>
-      </div>
-
+          That snippet simply takes the current node (span id="nodeSentToHowdyFunction"), and
+              all children of it (span id="time") and runs a CSS selector, which replaces the child
+              node (span id="time") with the current time.
+        -->
+	    <span id="nodeSentToHowdyFunction" class="lift:helloWorld.howdy">
+          Welcome to your Lift app at <span id="time">Time goes here</span>
+        </span>
+      </p>
     </div>
   </body>
-
-  <!--<head>-->
-    <!--<meta content="text/html; charset=UTF-8" http-equiv="content-type" />-->
-    <!--<title>Home</title>-->
-  <!--</head>-->
-  <!--<body class="lift:content_id=main">-->
-    <!--<div id="main" class="lift:surround?with=default;at=content">-->
-      <!--<h2>Welcome to your project!</h2>-->
-      <!--<p>-->
-	<!--<span class="lift:helloWorld.howdy">-->
-	  <!--Welcome to your Lift app at <span id="time">Time goes here</span>-->
-	<!--</span>-->
-      <!--</p>-->
-    <!--</div>-->
-  <!--</body>-->
 </html>
 

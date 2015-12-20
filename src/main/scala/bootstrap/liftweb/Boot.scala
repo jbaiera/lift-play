@@ -19,60 +19,66 @@ import code.model._
  */
 class Boot {
   def boot {
-    if (!DB.jndiJdbcConnAvailable_?) {
-      val vendor = new StandardDBVendor(
-           Props.get("db.driver") openOr "org.h2.Driver",
-			     Props.get("db.url") openOr 
-			     "jdbc:h2:lift_proto.db;AUTO_SERVER=TRUE",
-			     Props.get("db.user"), Props.get("db.password"))
 
-      LiftRules.unloadHooks.append(vendor.closeAllConnections_! _)
+    case class ParamInfo(paramInfo: String)
 
-      DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
-    }
+    // Build SiteMap
+    // - Site map is really just a way to dictate which pages you will ever serve for your app.
+    //
+    // - Pages not in the site map are never to be served.
+    //
+    // - Menu's have an ID, a display name (identical with single argument) and a 'Loc'.
+    //
+    // - The Loc is defined by using the slashes, which identifies both the app URL and
+    //      where to locate the source html file.
+    //
+    // - You may use the '**' special Loc to state that all pages defined underneath are
+    //      allowed to be served. The Menu that you set this with defaults to point to the
+    //      directory above the '**'.
+    //
+    // - You can attach rules for the locations with ">>".
+    // -- Using the "If" rule, you can define a boolean function that decides whether the page
+    //      is available (access control)
+    // -- Using the "Hidden" rule, you can hide a menu from potential auto display.
+    // -- Using the "LocGroup" rule, you can make groupings of menu options.
+    //
+    // - Menus may be nested in other Menus with "submenus()" method.
+    //
+    // - Menus can define a page that recieves information from a parameter in the URL.
+    // -- Requires two functions, parser (url string to object) and encoder (object to url string)
+    def sitemap = SiteMap(
+      Menu.i("Index") / "index",
+      Menu.i("Chat") / "chat",
+      Menu.i("Dev") / "static" / "dev" >> If(() => Props.mode == Props.RunModes.Development, S ? "Not Dev Mode"),
+      Menu.i("Prod") / "static" / "prod" >> If(() => Props.mode == Props.RunModes.Production, S ? "Not Prod Mode"),
+      Menu.i("Info") / "info" submenus(
+        Menu.i("About") / "static" / "about" >> Hidden >> LocGroup("bottom"),
+        Menu.i("Contact") / "static" / "contact",
+        Menu.i("Feedback") / "static" / "feedback" >> LocGroup("bottom")
+      ),
+      Menu.i("Static") / "static" / **,
+      // Menu for a parameterized page - need a way to turn the string path into a boxed object, and back again
+      // with the 'parser' and 'encoder' functions.
+      Menu.param[ParamInfo]("Param", "Param", s => Full(ParamInfo(s)), p => p.paramInfo) / "param"
+    )
 
-    // Use Lift's Mapper ORM to populate the database
-    // you don't need to use Mapper to use Lift... use
-    // any ORM you want
-    Schemifier.schemify(true, Schemifier.infoF _, User)
+    // set the sitemap.  Note if you don't want access control for
+    // each page, just comment this line out.
+    LiftRules.setSiteMapFunc(() => sitemap)
 
     // where to search snippet
     LiftRules.addToPackages("code")
 
-    // Build SiteMap
-    def sitemap = SiteMap(
-      Menu.i("Home") / "index" >> User.AddUserMenusAfter, // the simple way to declare a menu
-
-      // more complex because this menu allows anything in the
-      // /static path to be visible
-      Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
-	       "Static Content")))
-
-    def sitemapMutators = User.sitemapMutator
-
-    // set the sitemap.  Note if you don't want access control for
-    // each page, just comment this line out.
-    LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
-
     //Show the spinny image when an Ajax call starts
-    LiftRules.ajaxStart =
-      Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
+    LiftRules.ajaxStart = Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
     
     // Make the spinny image go away when it ends
-    LiftRules.ajaxEnd =
-      Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
+    LiftRules.ajaxEnd = Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
 
     // Force the request to be UTF-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
 
-    // What is the function to test if a user is logged in?
-    LiftRules.loggedInTest = Full(() => User.loggedIn_?)
-
     // Use HTML5 for rendering
-    LiftRules.htmlProperties.default.set((r: Req) =>
-      new Html5Properties(r.userAgent))    
-
-    // Make a transaction span the whole HTTP request
-    S.addAround(DB.buildLoanWrapper)
+    LiftRules.htmlProperties.default.set((r: Req) => new Html5Properties(r.userAgent))
   }
 }

@@ -9,6 +9,8 @@ import code.lib._
 import Helpers._
 
 class HelloWorld {
+  // This uses some dependency injection stuff that I don't fully understand yet.
+  // I mean, I understand automated dependency injection, but not this in particular...
   lazy val date: Box[Date] = DependencyFactory.inject[Date] // inject the date
 
   // replace the contents of the element with id "time" with the date
