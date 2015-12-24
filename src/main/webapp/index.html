@@ -7,12 +7,12 @@
   <!--
     Identifies the "main" div as the actual content to work with.
   -->
-  <body class="lift:content_id=main">
+  <body data-lift-content-id="main">
 
     <!--
       Invokes the "surround" snippet, using the "default" template and injecting the tags into the "content" id tag.
     -->
-    <div id="main" class="lift:surround?with=bootstrap;at=content">
+    <div id="main" data-lift="surround?with=bootstrap;at=content">
       <h2>Welcome to your project!</h2>
       <p>
         <!--
@@ -22,7 +22,7 @@
               all children of it (span id="time") and runs a CSS selector, which replaces the child
               node (span id="time") with the current time.
         -->
-	    <span id="nodeSentToHowdyFunction" class="lift:helloWorld.howdy">
+	    <span id="nodeSentToHowdyFunction" data-lift="helloWorld.howdy">
           Welcome to your Lift app at <span id="time">Time goes here</span>
         </span>
       </p>

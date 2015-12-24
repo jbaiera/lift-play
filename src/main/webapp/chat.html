@@ -9,7 +9,7 @@
     which is the div below. This is essentially a way to bootstrap Lift by telling it what tag
     to start with.
    -->
-  <body class="lift:content_id=main">
+  <body data-lift-content-id="main">
 
     <!--
       The id for this tag is "main" which means that the above class identifies it as the starting
@@ -22,7 +22,7 @@
         Param "with=default" tells "surround" which html file to use as the template.
         Param "at=content" tells "surround" the id of the tag in the template to replace with this content.
     -->
-    <div id="main" class="lift:surround?with=bootstrap;at=content">
+    <div id="main" data-lift="surround?with=bootstrap;at=content">
 
       <!--
         Here, we invoke the "comet" snippet from Lift.
@@ -34,7 +34,7 @@
         The "comet" snippet then modifies this node by attaching the required javascript that will communicate
           with the expected server side Actor.
       -->
-      <div class="lift:comet?type=Chat">
+      <div data-lift="comet?type=Chat">
         Some chat messages
         <ul>
           <li>A message</li>
@@ -49,7 +49,7 @@
           This snippet modifies the current html node by setting the form submission to use AJAX.
           The real magic of the form submission is the "chat_in" input.
         -->
-        <form class="lift:form.ajax">
+        <form data-lift="form.ajax">
           <!--
             Here, we invoke our own custom snippet "ChatIn".
             This snippet of ours modifies the following tag with what to do with the data it has collected
@@ -62,7 +62,7 @@
               which triggers submission for the form's elements.
             This is the same for if you simply press "enter" while in the text box.
           -->
-          <input class="lift:ChatIn" id="chat_in"/>
+          <input data-lift="ChatIn" id="chat_in"/>
           <input type="submit" value="Say Something"/>
         </form>
 
