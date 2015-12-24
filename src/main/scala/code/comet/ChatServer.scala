@@ -2,6 +2,9 @@ package code.comet
 
 import net.liftweb.actor.LiftActor
 import net.liftweb.http.ListenerManager
+import net.liftweb.util.Helpers
+
+import scala.xml.NodeSeq
 
 /**
  * Singleton that provides the chat features to all clients.
@@ -11,11 +14,13 @@ import net.liftweb.http.ListenerManager
  */
 object ChatServer extends LiftActor with ListenerManager {
 
+  case class ChatMessage(mesg: String, sender: Sender)
+
   /**
    * This is the chat history as the chat server knows it. We start with a welcome message
    * and as it receives updates, it will append them to the chat history.
    */
-  private var msgs: Vector[String] = Vector("Welcome")
+  private var msgs: Vector[NodeSeq] = Vector(wrap("Welcome", FromServer))
 
   /**
    * This method produces the update to send to it's listeners when needed.
@@ -29,6 +34,28 @@ object ChatServer extends LiftActor with ListenerManager {
    * append them to the messages currently in the server and update all the listeners.
    */
   override protected def lowPriority: PartialFunction[Any, Unit] = {
-    case s: String => msgs :+= s; updateListeners()
+    case ChatMessage(mesg, sender) => msgs :+= wrap(mesg, sender); updateListeners()
   }
+
+  sealed trait Sender {
+    def level = "label"
+    def who: String
+  }
+  object FromServer extends Sender {
+    override def level = super.level + " label-success"
+    override def who = "Server"
+  }
+  case class FromUser(whoami: String) extends Sender {
+    override def level = super.level + " label-info"
+    override def who = whoami
+  }
+  object FromGuest extends Sender {
+    override def level = super.level + " label-warning"
+    override def who = "Guest"
+  }
+
+  private def wrap(mesg: String, sender: Sender): NodeSeq =
+    <span>
+      <span class="label label-default">@{Helpers.formattedTimeNow}</span>
+      <span class={sender.level}>{sender.who}</span> <em>said:</em> {mesg}</span>
 }

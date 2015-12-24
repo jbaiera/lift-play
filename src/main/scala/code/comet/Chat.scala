@@ -5,6 +5,8 @@ import net.liftweb.http._
 import net.liftweb.http.js.jquery.JqJE.{Jq, JqScrollToBottom}
 import net.liftweb.util._
 
+import scala.xml.NodeSeq
+
 /**
  * This Actor handles changes to the server state (the chat history) by pushing the
  * required changes out to clients using Comet. In this case, this is basically an
@@ -19,7 +21,7 @@ class Chat extends CometActor with CometListener {
    * This is the current state of the chat room that should be rendered.
    * We will re-render the web page with the contents on update.
    */
-  private var msgs: Vector[String] = Vector()
+  private var msgs: Vector[NodeSeq] = Vector()
 
   /**
    * I want to be notified by the ChatServer when things change. When this actor
@@ -33,7 +35,7 @@ class Chat extends CometActor with CometListener {
    * and reRender them to the page via a Comet call.
    */
   override def lowPriority: PartialFunction[Any, Unit] = {
-    case v: Vector[String] => msgs = v; reRender();
+    case v: Vector[NodeSeq] => msgs = v; reRender();
   }
 
   /**

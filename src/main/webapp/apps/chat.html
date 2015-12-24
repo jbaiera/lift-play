@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home</title>
+  </head>
+  <body data-lift-content-id="main">
+    <div id="main" data-lift="surround?with=bootstrap;at=content">
+
+      <div id="chat-app" style="position: relative">
+        <div data-lift="comet?type=Chat">
+          <h2>All Chat</h2>
+          <div class="well">
+            <ul id="messages" style="left: 0;right: 0;top: 0;bottom: 0;overflow-y: auto;height: 200px;">
+              <li style="list-style-type: none;">A message</li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <form data-lift="form.ajax">
+            <div class="input-group">
+              <span class="input-group-addon" id="chat-box-1">Chat!</span>
+              <input id="chat_in" type="text" class="form-control" placeholder="Your message..." aria-describedby="chat-box-1" data-lift="ChatIn">
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
+

@@ -1,6 +1,8 @@
 package code.snippet
 
 import code.comet.ChatServer
+import code.comet.ChatServer.{FromUser, FromGuest, ChatMessage}
+import code.model.User
 import net.liftweb.http.SHtml
 import net.liftweb.http.js.JsCmds.SetValById
 
@@ -12,6 +14,8 @@ import net.liftweb.http.js.JsCmds.SetValById
  */
 object ChatIn {
 
+  def getSender = User.currentUser.map(_.shortName).map(new FromUser(_)).openOr(FromGuest)
+
   /**
    * This method returns a function that performs the mutation.
    * The function it returns takes in the &lt;input class="..."&gt; tag as
@@ -22,7 +26,7 @@ object ChatIn {
    * be empty thus causing no page loads.
    */
   def render = SHtml.onSubmit(s => {
-    if (!s.isEmpty) ChatServer ! s
+    if (!s.isEmpty) ChatServer ! ChatMessage(s, getSender)
     SetValById("chat_in", "")
   })
 }
