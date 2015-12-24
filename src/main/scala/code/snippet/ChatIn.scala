@@ -22,7 +22,7 @@ object ChatIn {
    * be empty thus causing no page loads.
    */
   def render = SHtml.onSubmit(s => {
-    ChatServer ! s
+    if (!s.isEmpty) ChatServer ! s
     SetValById("chat_in", "")
   })
 }
