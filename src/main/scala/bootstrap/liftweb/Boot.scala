@@ -30,12 +30,14 @@ class Boot {
   def userLinkText = User.currentUser.map(_.shortName).openOr("not logged in")
 
   def sitemap = SiteMap(
-    Menu.i("Index") / "index" >> LocGroup("lift"),
-    Menu.i("Chat") / "chat" >> LocGroup("lift"),
+    Menu.i("Index") / "index" >> LocGroup("lift-internals"),
 
-    Menu.i("Search") / "spellbook" / "search" >> LocGroup("spellbook") submenus(
+    Menu.i("Apps") / "apps" / "#" >> LocGroup("main") >> PlaceHolder submenus (
+      Menu.i("Chat") / "apps"/ "chat"),
+
+    Menu.i("Search") / "spellbook" / "search" >> LocGroup("main") submenus(
       Menu.param[SpellInfo]("Spell", "Spell", s => Full(SpellInfo(s)), p => p.spellId) / "spellbook" / "spell" >> Hidden),
-    Menu.i("Browse") / "spellbook" / "browse" >> LocGroup("spellbook"),
+    Menu.i("Browse") / "spellbook" / "browse" >> LocGroup("main"),
 
     User.loginMenuLoc.openOrThrowException("User Module Login Menu Error"),
     User.createUserMenuLoc.openOrThrowException("User Module Create Menu Error"),
