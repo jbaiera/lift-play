@@ -40,6 +40,8 @@ dependencies {
     scalaCompiler "org.scala-lang:scala-compiler:$scalaVersion.$scalaMinor"
     scalaLibrary "org.scala-lang:scala-library:$scalaVersion.$scalaMinor"
 
+    runtime "org.scala-lang:scala-compiler:$scalaVersion.$scalaMinor"
+
     compile "org.scala-lang:scala-library:$scalaVersion.$scalaMinor", 
     	"net.liftweb:lift-mapper_$scalaVersion:$liftVersion", 
     	"net.liftweb:lift-webkit_$scalaVersion:$liftVersion",
