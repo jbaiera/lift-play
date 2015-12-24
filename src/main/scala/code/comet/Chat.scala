@@ -2,6 +2,7 @@ package code.comet
 
 import net.liftweb.common.SimpleActor
 import net.liftweb.http._
+import net.liftweb.http.js.jquery.JqJE.{Jq, JqScrollToBottom}
 import net.liftweb.util._
 
 /**
@@ -11,6 +12,8 @@ import net.liftweb.util._
  * the page to be reloaded.
  */
 class Chat extends CometActor with CometListener {
+
+  def $(s: String): Jq = Jq(s)
 
   /**
    * This is the current state of the chat room that should be rendered.
@@ -35,8 +38,11 @@ class Chat extends CometActor with CometListener {
 
   /**
    * Put the messages in the &lt;li&gt; elements and clear any elements that have the clearable class.
-   * This is some funky looking operator syntax that is from the Lift library.
+   * Create a css selector object that replaces li and it's children with the msgs to render, and that
+   *    clears clearable messages.
+   * Also attach some generated javascript. Lift can generate some basic jQuery recipes, in this case,
+   *    scroll the "messages" id to the bottom.
    */
-  override def render: RenderOut = "li *" #> msgs & ClearClearable
+  override def render: RenderOut = ("li *" #> msgs & ClearClearable) ++ ($("#messages") ~> JqScrollToBottom).cmd
 
 }
