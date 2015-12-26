@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <title>Spell Page</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
     </head>
     <body data-lift-content-id="main">
         <!-- Main Content -->
-        <div id="main" class="lift:surround?with=bootstrap;at=content">
+        <div id="main" data-lift="surround?with=bootstrap;at=content">
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Search</a></li>
@@ -20,8 +20,9 @@
             <h3>
                 ??? title ???
             </h3>
-                <span name="isRitual"><span class="label label-primary">Ritual</span></span>
-                <span name="isConcentrate"><span class="label label-warning">Concentration</span></span>
+            <h5>
+                <span class="isRitual"><span class="label label-primary">Ritual</span></span>
+                <span class="isConcentrate"><span class="label label-warning">Concentration</span></span>
             </h5>
             <hr>
             <div class="row">
@@ -33,7 +34,7 @@
                         <dt>School</dt>
                         <dd>
                             ??? school ???
-                            <span name="isRitual">Ritual</span>
+                            <span class="isRitual">Ritual</span>
                         </dd>
 
                         <dt>Casting Time</dt>
@@ -41,14 +42,14 @@
 
                         <dt>Components</dt>
                         <dd>
-                            <span name="componentValues">??? component values ???</span>
-                            <span name="componentsMaterials">??? component materials ???</span>
+                            <span class="componentValues">??? component values ???</span>
+                            <span class="componentsMaterials">??? component materials ???</span>
                         </dd>
 
                         <dt>Duration</dt>
                         <dd>
-                            <span name="durationTime">??? duration time ???</span>
-                            <span name="isConcentrate">(Concentration)</span>
+                            <span class="durationTime">??? duration time ???</span>
+                            <span class="isConcentrate">(Concentration)</span>
                         </dd>
                     </dl>
                 </div>
@@ -57,10 +58,8 @@
                         <dt>Description</dt>
                         <dd>??? description ???</dd>
 
-                        <div name="atHigherLevels">
-                            <dt>At Higher Levels</dt>
-                            <dd name="atHigherLevelData">??? Rules ???</dd>
-                        </div>
+                        <dt>At Higher Levels</dt>
+                        <dd id="atHigherLevelData">??? Rules ???</dd>
                     </dl>
                 </div>
             </div>
