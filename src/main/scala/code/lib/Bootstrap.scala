@@ -16,10 +16,19 @@ object Bootstrap {
    */
   object Alerts {
 
+    case class AlertID(id: String)
+
     /**
      * Defines characteristics of the alert level.
      */
     sealed trait AlertLevel {
+      /*
+       * Todo:
+       * Split into multiple traits to allow users to override
+       * message building and formatting. Not everyone wants
+       * glyphicons, or even potentially the Bootstrap defined
+       * styling.
+       */
       private[Bootstrap] def styleClass = "list-group-item alert"
 
       def glyph: String
@@ -59,7 +68,7 @@ object Bootstrap {
      * called is [[S.error]].
      */
     object Error extends AlertLevel {
-      private[Bootstrap] override def styleClass = super.styleClass + " list-group-item-error"
+      private[Bootstrap] override def styleClass = super.styleClass + " list-group-item-danger"
 
       override def glyph = "remove-sign"
 
@@ -99,6 +108,11 @@ object Bootstrap {
            |$jq('#lift__noticesContainer___error ul')
            |.addClass("list-group")""".stripMargin
 
+      /*
+       * Todo:
+       * Allow a user the possiblity of registering their own (AlertID => Full[JsCmd])
+       * entries to handle styling specific to their own needs.
+       */
       (notice: Box[NoticeType.Value], id: String) => {
         notice match {
           case Full(v) => v match {
@@ -125,18 +139,29 @@ object Bootstrap {
       alert(alertClass, Full(header), message)
     }
 
+    /*
+     * Todo:
+     * When you configure the object in Boot, you should probably associate the AlertID
+     * with a specific AlertLevel once and then use that to look up the AlertLevel
+     * during the actual !! call. The reason is some goofyness with the fact that
+     * AlertLevel needs to be used in both a configuring sense, and a message creation
+     * sense. Supposedly, methods with ID's are not coupled with specific notice types
+     * in the effects function. Because AlertLevel is used in those places to configure
+     * format effects, we should associate an AlertID with with an AlertClass flat out.
+     */
+
     /**
      * Sets a notice at the given alert class with a given id.
      */
-    def !! (alertClass: AlertLevel, message: String, id: String): Unit = {
-      alert(alertClass, Empty, message, id)
+    def !! (id: AlertID, alertClass: AlertLevel, message: String): Unit = {
+      alert(id, alertClass, Empty, message)
     }
 
     /**
      * Sets a notice with the given header as the title at the given alert class with a given id.
      */
-    def !! (alertClass: AlertLevel, header: String, message: String, id: String): Unit = {
-      alert(alertClass, Full(header), message, id)
+    def !! (id: AlertID, alertClass: AlertLevel, header: String, message: String): Unit = {
+      alert(id, alertClass, Full(header), message)
     }
 
     private [Bootstrap] def alert(alertClass: AlertLevel, header: Box[String], message: String): Unit = {
@@ -148,8 +173,9 @@ object Bootstrap {
       }
     }
 
-    private [Bootstrap] def alert(alertClass: AlertLevel, header: Box[String], message: String, id: String): Unit = {
+    private [Bootstrap] def alert(idBox: AlertID, alertClass: AlertLevel, header: Box[String], message: String): Unit = {
       val msg = makeMessage(header, message, alertClass)
+      val AlertID(id) = idBox
       alertClass match {
         case Info => S.notice(id, msg)
         case Warn => S.warning(id, msg)
