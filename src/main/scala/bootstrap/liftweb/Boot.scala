@@ -19,12 +19,12 @@ import code.model._
  * to modify lift's environment
  */
 class Boot {
-  def boot {
-    configurePersistence
+  def boot() {
+    configurePersistence()
     LiftRules.setSiteMapFunc(() => sitemap)
     LiftRules.addToPackages("code")
-    configureAjax
-    configureEncodings
+    configureAjax()
+    configureEncodings()
     LiftRules.noticesEffects.default.set(Bootstrap.Alerts.getNoticeEffects())
   }
 
@@ -35,6 +35,9 @@ class Boot {
 
     Menu.i("Apps") / "apps" / "#" >> LocGroup("main") >> PlaceHolder submenus (
       Menu.i("Chat") / "apps"/ "chat"),
+
+    Menu.i("Forms") / "forms" / "#" >> LocGroup("main") >> PlaceHolder submenus (
+      Menu.i("Dumb") / "forms" / "dumb"),
 
     Menu.i("Search") / "spellbook" / "search" >> LocGroup("main") submenus(
       Menu.param[SpellInfo]("Spell", "Spell", s => Full(SpellInfo(s)), p => p.spellId) / "spellbook" / "spell" >> Hidden),
@@ -49,7 +52,7 @@ class Boot {
       User.changePasswordMenuLoc.openOrThrowException("User Module PWD Menu Error"))
   )
 
-  def configurePersistence: Unit = {
+  def configurePersistence(): Unit = {
     if (!DB.jndiJdbcConnAvailable_?) {
       val vendor = new StandardDBVendor(
         Props.get("db.driver") openOr "org.h2.Driver",
@@ -63,12 +66,12 @@ class Boot {
     Schemifier.schemify(true, Schemifier.infoF _, User)
   }
 
-  def configureAjax: Unit = {
+  def configureAjax(): Unit = {
     LiftRules.ajaxStart = Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
     LiftRules.ajaxEnd = Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
   }
 
-  def configureEncodings: Unit = {
+  def configureEncodings(): Unit = {
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
     LiftRules.htmlProperties.default.set((r: Req) => new Html5Properties(r.userAgent))
   }
