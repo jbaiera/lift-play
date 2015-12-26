@@ -1,4 +1,4 @@
-package code.snippet
+package forms.snippet
 
 import code.lib.Bootstrap.Alerts
 import code.lib.Bootstrap.Alerts.Info
@@ -6,7 +6,7 @@ import net.liftweb.http.S
 
 import scala.xml.NodeSeq
 
-class DumbForm {
+object DumbForm {
 
   /**
     * Box objects are from the Lift framework and are pretty much just
