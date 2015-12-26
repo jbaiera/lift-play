@@ -1,9 +1,9 @@
 package bootstrap.liftweb
 
+import code.lib.Bootstrap
 import code.snippet.SpellInfo
 import net.liftweb._
 import util._
-import Helpers._
 
 import common._
 import http._
@@ -25,6 +25,7 @@ class Boot {
     LiftRules.addToPackages("code")
     configureAjax
     configureEncodings
+    LiftRules.noticesEffects.default.set(Bootstrap.Alerts.getNoticeEffects())
   }
 
   def userLinkText = User.currentUser.map(_.shortName).openOr("not logged in")
