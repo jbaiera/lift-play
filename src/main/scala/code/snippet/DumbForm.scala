@@ -1,6 +1,7 @@
 package code.snippet
 
-import code.lib.Bootstrap.Alerts.{Info, genAlert}
+import code.lib.Bootstrap.Alerts
+import code.lib.Bootstrap.Alerts.Info
 import net.liftweb.http.S
 
 import scala.xml.NodeSeq
@@ -26,8 +27,8 @@ class DumbForm {
       name <- S.param("name")
       age <- S.param("age")
     } {
-      genAlert("Name: "+name, Info)
-      genAlert("Age: "+age, Info)
+      Alerts ! (Info, s"Name: $name")
+      Alerts ! (Info, s"Age: $age")
       S.redirectTo("/")
     }
 

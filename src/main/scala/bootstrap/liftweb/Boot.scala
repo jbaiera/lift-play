@@ -25,7 +25,7 @@ class Boot {
     LiftRules.addToPackages("code")
     configureAjax()
     configureEncodings()
-    LiftRules.noticesEffects.default.set(Bootstrap.Alerts.getNoticeEffects())
+    LiftRules.noticesEffects.default.set(Bootstrap.Alerts.getNoticeEffects)
   }
 
   def userLinkText = User.currentUser.map(_.shortName).openOr("not logged in")
