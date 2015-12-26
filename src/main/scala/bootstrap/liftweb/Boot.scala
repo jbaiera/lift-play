@@ -19,10 +19,11 @@ import code.model._
  * to modify lift's environment
  */
 class Boot {
+
   def boot() {
     configurePersistence()
     LiftRules.setSiteMapFunc(() => sitemap)
-    LiftRules.addToPackages("code")
+    configureProjectPackages()
     configureAjax()
     configureEncodings()
     LiftRules.noticesEffects.default.set(Bootstrap.Alerts.getNoticeEffects)
@@ -37,11 +38,12 @@ class Boot {
       Menu.i("Chat") / "apps"/ "chat"),
 
     Menu.i("Forms") / "forms" / "#" >> LocGroup("main") >> PlaceHolder submenus (
-      Menu.i("Dumb") / "forms" / "dumb"),
+      Menu.i("Dumb") / "forms" / "dumb",
+      Menu.i("OnSubmit") / "forms" / "onSubmit"),
 
-    Menu.i("Search") / "spellbook" / "search" >> LocGroup("main") submenus(
-      Menu.param[SpellInfo]("Spell", "Spell", s => Full(SpellInfo(s)), p => p.spellId) / "spellbook" / "spell" >> Hidden),
+    Menu.i("Search") / "spellbook" / "search" >> LocGroup("main"),
     Menu.i("Browse") / "spellbook" / "browse" >> LocGroup("main"),
+    Menu.param[SpellInfo]("Spell", "Spell", s => Full(SpellInfo(s)), p => p.spellId) / "spellbook" / "spell" >> Hidden,
 
     User.loginMenuLoc.openOrThrowException("User Module Login Menu Error"),
     User.createUserMenuLoc.openOrThrowException("User Module Create Menu Error"),
@@ -64,6 +66,11 @@ class Boot {
       DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
     }
     Schemifier.schemify(true, Schemifier.infoF _, User)
+  }
+
+  def configureProjectPackages(): Unit = {
+    LiftRules.addToPackages("code")
+    LiftRules.addToPackages("forms")
   }
 
   def configureAjax(): Unit = {
