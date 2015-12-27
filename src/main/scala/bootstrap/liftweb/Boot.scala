@@ -39,7 +39,8 @@ class Boot {
 
     Menu.i("Forms") / "forms" / "#" >> LocGroup("main") >> PlaceHolder submenus (
       Menu.i("Dumb") / "forms" / "dumb",
-      Menu.i("OnSubmit") / "forms" / "onSubmit"),
+      Menu.i("OnSubmit") / "forms" / "onSubmit",
+      Menu.i("Stateful") / "forms" / "stateful"),
 
     Menu.i("Search") / "spellbook" / "search" >> LocGroup("main"),
     Menu.i("Browse") / "spellbook" / "browse" >> LocGroup("main"),
