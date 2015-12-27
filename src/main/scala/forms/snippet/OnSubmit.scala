@@ -1,6 +1,6 @@
 package forms.snippet
 
-import code.lib.Bootstrap.Alerts
+import code.lib.Bootstrap.{Glyphicons, Alerts}
 import code.lib.Bootstrap.Alerts.{Info, Error}
 import net.liftweb.util.Helpers._
 import net.liftweb.http.{SHtml, S}
@@ -15,10 +15,10 @@ object OnSubmit {
     // function to call when we need to process the form
     def process(): Unit = {
       // if age is < 13 display an error
-      if (age < 13) Alerts ! (Error, "Too young!")
+      if (age < 13) S.error("onsubmit-age-box", Glyphicons.wrap("Too Young!", "remove-sign"))
       else {
-        Alerts ! (Info, s"Name : $name")
-        Alerts ! (Info, s"Age : $age")
+        Alerts !< (Info, s"Name : $name")
+        Alerts !< (Info, s"Age : $age")
         S.redirectTo("/")
       }
     }

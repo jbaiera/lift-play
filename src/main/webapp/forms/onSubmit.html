@@ -15,23 +15,21 @@
             <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
                 <h3>OnSubmit Form</h3>
                 <div class="well">
-                <!--<div class="panel panel-default">-->
-                    <!--<div class="panel-body">-->
-                        <form data-lift="OnSubmit?form=post">
-                            <div class="form-group">
-                                <label for="name-box">Name</label>
-                                <input type="text" class="form-control" id="name-box" name="name" placeholder="John Doe"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="age-box">Age</label>
-                                <input type="text" class="form-control" id="age-box" name="age" placeholder="35"/>
-                            </div>
-                            <hr>
-                            <div class="form-group">
-                                <input type="submit" class="form-control" value="Submit"/>
-                            </div>
-                        </form>
-                    <!--</div>-->
+                    <form data-lift="OnSubmit?form=post">
+                        <div class="form-group">
+                            <label for="name-box">Name</label>
+                            <input type="text" class="form-control" id="name-box" name="name" placeholder="John Doe"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="age-box">Age</label>
+                            <span data-lift="Msg?id=onsubmit-age-box;errorClass=label label-danger"></span>
+                            <input type="text" class="form-control" id="age-box" name="age" placeholder="35"/>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <input type="submit" class="form-control" value="Submit"/>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

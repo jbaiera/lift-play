@@ -27,8 +27,8 @@ object DumbForm {
       name <- S.param("name")
       age <- S.param("age")
     } {
-      Alerts ! (Info, s"Name: $name")
-      Alerts ! (Info, s"Age: $age")
+      Alerts !< (Info, s"Name: $name")
+      Alerts !< (Info, s"Age: $age")
       S.redirectTo("/")
     }
 
