@@ -104,7 +104,7 @@ object Bootstrap {
             case NoticeType.Warning => Full(JE.JsRaw(jsWarning).cmd)
             case NoticeType.Error => Full(JE.JsRaw(jsError).cmd)
           }
-          case _ => Full(JE.JsRaw(jsNotice).cmd)
+          case _ => Empty
         }
       }
     }
