@@ -7,7 +7,7 @@ import net.liftweb.http.LiftScreen
 /**
  * You can also, alternatively, use the screen and wizard technology to make forms.
  */
-class ScreenExample extends LiftScreen {
+object ScreenExample extends LiftScreen {
 
   val name = field("Name", "")
 
