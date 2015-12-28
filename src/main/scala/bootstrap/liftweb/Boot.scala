@@ -41,7 +41,8 @@ class Boot {
       Menu.i("Dumb") / "forms" / "dumb",
       Menu.i("OnSubmit") / "forms" / "onSubmit",
       Menu.i("Stateful") / "forms" / "stateful",
-      Menu.i("RequestVars") / "forms" / "reqvar"),
+      Menu.i("RequestVars") / "forms" / "reqvar",
+      Menu.i("Screen") / "forms" / "screen"),
 
     Menu.i("Search") / "spellbook" / "search" >> LocGroup("main"),
     Menu.i("Browse") / "spellbook" / "browse" >> LocGroup("main"),
