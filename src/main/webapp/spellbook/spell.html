@@ -12,55 +12,51 @@
     <body data-lift-content-id="main">
         <!-- Main Content -->
         <div id="main" data-lift="surround?with=bootstrap;at=content">
-            <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Search</a></li>
-                <li class="active">??? title ???</li>
-            </ol>
-            <h3>
-                ??? title ???
-            </h3>
-            <h5>
-                <span class="isRitual"><span class="label label-primary">Ritual</span></span>
-                <span class="isConcentrate"><span class="label label-warning">Concentration</span></span>
-            </h5>
-            <hr>
-            <div class="row">
-                <div class="col-sm-6">
-                    <dl>
-                        <dt>Level</dt>
-                        <dd>??? level ???</dd>
-
-                        <dt>School</dt>
-                        <dd>
-                            ??? school ???
-                            <span class="isRitual">Ritual</span>
-                        </dd>
-
-                        <dt>Casting Time</dt>
-                        <dd>??? castingTime ???</dd>
-
-                        <dt>Components</dt>
-                        <dd>
-                            <span class="componentValues">??? component values ???</span>
-                            <span class="componentsMaterials">??? component materials ???</span>
-                        </dd>
-
-                        <dt>Duration</dt>
-                        <dd>
-                            <span class="durationTime">??? duration time ???</span>
-                            <span class="isConcentrate">(Concentration)</span>
-                        </dd>
-                    </dl>
+            <div id="breadcrumb-container">
+                <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Search</a></li>
+                    <li class="active">title</li>
+                </ol>
+            </div>
+            <div id="spell-container" data-lift="Spell">
+                <div id="header">
+                    <h3>
+                        <span id="title">title</span>
+                    </h3>
+                    <h5>
+                        <span id="ritual-tag" class="label label-primary">Ritual</span>
+                        <span id="concentrate-tag" class="label label-warning">Concentration</span>
+                    </h5>
                 </div>
-                <div class="col-sm-6">
-                    <dl>
-                        <dt>Description</dt>
-                        <dd>??? description ???</dd>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <dl>
+                            <dt>Level</dt>
+                            <dd><span id="spell-level">level</span></dd>
 
-                        <dt>At Higher Levels</dt>
-                        <dd id="atHigherLevelData">??? Rules ???</dd>
-                    </dl>
+                            <dt>School</dt>
+                            <dd><span id="school">school</span><span id="ritual"></span></dd>
+
+                            <dt>Casting Time</dt>
+                            <dd><span id="cast-time">cast time</span></dd>
+
+                            <dt>Components</dt>
+                            <dd><span id="components">components</span> <span id="materials">materials</span></dd>
+
+                            <dt>Duration</dt>
+                            <dd><span id="duration">duration</span><span id="concentrate"></span></dd>
+                        </dl>
+                    </div>
+                    <div class="col-sm-6">
+                        <dl>
+                            <dt>Description</dt>
+                            <dd><span id="description">description</span></dd>
+
+                            <span id="higher-level"></span>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>

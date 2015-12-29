@@ -1,17 +1,14 @@
 package bootstrap.liftweb
 
 import code.lib.Bootstrap
-import code.snippet.SpellInfo
-import net.liftweb._
-import util._
-
-import common._
-import http._
-import sitemap._
-import Loc._
-import mapper._
-
 import code.model._
+import code.snippet.{Spell, SpellInfo}
+import net.liftweb.common._
+import net.liftweb.http._
+import net.liftweb.mapper._
+import net.liftweb.sitemap.Loc._
+import net.liftweb.sitemap._
+import net.liftweb.util._
 
 
 /**
@@ -46,7 +43,7 @@ class Boot {
 
     Menu.i("Search") / "spellbook" / "search" >> LocGroup("main"),
     Menu.i("Browse") / "spellbook" / "browse" >> LocGroup("main"),
-    Menu.param[SpellInfo]("Spell", "Spell", s => Full(SpellInfo(s)), p => p.spellId) / "spellbook" / "spell" >> Hidden,
+    Menu.param[SpellInfo]("Spell", "Spell", s => Spell.getSpellById(s), p => p.spellId) / "spellbook" / "spell" >> Hidden,
 
     User.loginMenuLoc.openOrThrowException("User Module Login Menu Error"),
     User.createUserMenuLoc.openOrThrowException("User Module Create Menu Error"),
