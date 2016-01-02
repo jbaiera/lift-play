@@ -6,6 +6,8 @@ apply {
     plugin 'eclipse'
 }
 
+defaultTasks 'jettyRun'
+
 ext {
   scalaVersion = '2.10'
   scalaMinor = '2'
